@@ -120,6 +120,7 @@ while True:
         client.publish("alarm", "CO2")
         tele.send_message("CO2 detected! contact your daddy")
         time.sleep(1)
+        p = GPIO.HIGH
     else:
         GPIO.output(buzzer, GPIO.LOW)
 
