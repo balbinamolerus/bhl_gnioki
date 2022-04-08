@@ -82,17 +82,10 @@ try:
     #     if (num == 10):
     #         break
 
-    logging.info("Clear...")
     epd.init()
     epd.Clear(0xFF)
-
-    logging.info("Goto Sleep...")
     epd.sleep()
 
-except IOError as e:
-    logging.info(e)
-
 except KeyboardInterrupt:
-    logging.info("ctrl + c:")
     epd2in9_V2.epdconfig.module_exit()
     exit()
