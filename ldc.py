@@ -10,11 +10,11 @@ def on_message(client, userdata, message):
     if message.topic == "alarm":
         alarm = True
         alarmType = str(message.payload.decode("utf-8"))
-        print('cipsko')
+        print('rzerzucha')
 
 broker_address = "192.168.137.50"
 client = mqtt.Client()
-client.username_pw_set("user2", "user2")
+client.username_pw_set("user1", "user1")
 client.on_message = on_message
 client.connect(broker_address, 1880)
 
