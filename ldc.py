@@ -29,8 +29,6 @@ def screen():
     global alarm
     global alarmType
     while True:
-        if alarm == True:
-
         epd = epd2in9_V2.EPD()
         epd.init()
         epd.Clear(0xFF)
