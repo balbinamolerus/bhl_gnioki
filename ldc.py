@@ -43,6 +43,7 @@ def screen():
         Himage = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(Himage)
         if alarm == True:
+            print('rzerzucha2')
             draw.text((20, 2), alarmType, font=font36, fill=0)
             alarm = False
         # draw.text((10, 20), '2.9inch e-Paper', font=font24, fill=0)
