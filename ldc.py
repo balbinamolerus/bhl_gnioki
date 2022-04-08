@@ -56,8 +56,8 @@ def screen():
         # draw.rectangle((80, 50, 130, 100), fill=0)
         # draw.chord((200, 50, 250, 100), 0, 360, fill=0)
         # Himage = Himage.transpose(method=Image.ROTATE_180)
-        epd.display(epd.getbuffer(Himage))
-        time.sleep(5)
+            epd.display(epd.getbuffer(Himage))
+            time.sleep(5)
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
