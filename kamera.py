@@ -8,5 +8,8 @@ try:
 		servo.max()
 		time.sleep(0.02)
 		servo.detach()
+		servo.min()
+		time.sleep(0.02)
+		servo.detach()
 except KeyboardInterrupt:
 	print("Program stopfgped")
