@@ -43,8 +43,12 @@ def screen():
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
+    lastTime = time.strftime('%H:%M:%S')
+    draw.text((30, 70), lastTime, font=font24, fill=0)
     while True:
-        draw.text((30, 70), time.strftime('%H:%M:%S'), font=font24, fill=0)
+        if time.strftime('%H:%M:%S')!=lastTime:
+            draw.text((30, 70), '', font=font24, fill=0)
+            draw.text((30, 70), time.strftime('%H:%M:%S'), font=font24, fill=0)
         if alarm:
             sumo+=1
             draw.text((20, 2), alarmType, font=font24, fill=0)
