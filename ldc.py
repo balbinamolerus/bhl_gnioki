@@ -47,10 +47,10 @@ def screen():
         try:
             if time.strftime('%H:%M')!=lastTime:
                 draw.rectangle((200, 80, 290, 104), fill=255)
-                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=1)
+                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
             if alarm:
                 sumo+=1
-                draw.text((10, 5), alarmType, font=font24, fill=1)
+                draw.text((10, 5), alarmType, font=font24, fill=0)
                 if sumo==2:
                     alarm = False
                     draw.rectangle((10, 5, 288, 32), fill=255)
