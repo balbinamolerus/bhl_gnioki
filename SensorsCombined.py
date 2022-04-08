@@ -1,9 +1,8 @@
 import time
-
-import smbus			#import SMBus module of I2C
-from time import sleep
+import smbus
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
+from pygame import mixer
 
 #some MPU6050 Registers and their Address
 PWR_MGMT_1   = 0x6B
@@ -20,10 +19,15 @@ GYRO_ZOUT_H  = 0x47
 
 buzzer = 20
 switch = 16
+play = 17
+
+mixer.init()
+mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setup(switch, GPIO.IN)
+GPIO.setup(play, GPIO.IN)
 
 def on_message(client, userdata, message):
     pass
@@ -74,19 +78,19 @@ Device_Address = 0x68  # MPU6050 device address
 
 MPU_Init()
 
+state = "PAUSED"
+last_play = GPIO.HIGH
 last_gas = GPIO.HIGH
 last_Ay = 1
 
 while True:
     # Read Accelerometer raw value
     acc_y = read_raw_data(ACCEL_YOUT_H)
-
-    # Full scale range +/- 250 degree/C as per sensitivity scale factor
     Ay = acc_y / 16384.0
-
-    print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)))
-
+    p = GPIO.input(play)
     gas = GPIO.input(switch)
+
+    print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
 
     # Sense CO2 or falling
     if Ay < 0.4 and last_Ay >= 0.4:
@@ -100,9 +104,18 @@ while True:
     else:
         GPIO.output(buzzer, GPIO.LOW)
 
+    # Music
+    if p == GPIO.LOW and last_play == GPIO.HIGH and state == "PAUSED":
+        mixer.music.play()
+        state = "PLAYING"
+    elif p == GPIO.LOW and last_play == GPIO.HIGH and state == "PLAYING":
+        mixer.music.pause()
+        state = "PAUSED"
+
+    last_play = p
     last_gas = gas
     last_Ay = Ay
-    time.sleep(0.5)
+    time.sleep(0.1)
 
 
 GPIO.cleanup()
