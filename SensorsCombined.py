@@ -3,6 +3,7 @@ import smbus
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from pygame import mixer
+from telegram import Telegram
 
 #some MPU6050 Registers and their Address
 PWR_MGMT_1   = 0x6B
@@ -16,7 +17,7 @@ ACCEL_ZOUT_H = 0x3F
 GYRO_XOUT_H  = 0x43
 GYRO_YOUT_H  = 0x45
 GYRO_ZOUT_H  = 0x47
-
+tele = Telegram()
 buzzer = 20
 switch = 16
 play = 17
@@ -28,6 +29,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
+
+
 
 def on_message(client, userdata, message):
     pass
@@ -96,10 +99,12 @@ while True:
     if Ay < 0.4 and last_Ay >= 0.4:
         GPIO.output(buzzer, GPIO.HIGH)
         client.publish("alarm", "fall")
+        tele.send_message("fall detected! contact your daddy")
         time.sleep(1)
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
         GPIO.output(buzzer, GPIO.HIGH)
         client.publish("alarm", "CO2")
+        tele.send_message("CO2 detected! contact your daddy")
         time.sleep(1)
     else:
         GPIO.output(buzzer, GPIO.LOW)
