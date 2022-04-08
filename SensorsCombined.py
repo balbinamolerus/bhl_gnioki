@@ -108,19 +108,19 @@ while True:
             if Ay >= 0.4 or p == GPIO.LOW:
                 alert = False
                 break
-            time.sleep(0.5)
-            ctr -= 0.5
+            time.sleep(0.1)
+            ctr -= 0.1
         if alert:
             tele.send_message("fall detected! contact your daddy")
         else:
             GPIO.output(buzzer, GPIO.LOW)
         time.sleep(1)
+        p = GPIO.HIGH
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
         GPIO.output(buzzer, GPIO.HIGH)
         client.publish("alarm", "CO2")
         tele.send_message("CO2 detected! contact your daddy")
         time.sleep(1)
-        p = GPIO.HIGH
     else:
         GPIO.output(buzzer, GPIO.LOW)
 
