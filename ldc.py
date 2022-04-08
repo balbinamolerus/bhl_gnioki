@@ -33,33 +33,33 @@ def screen():
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
-
+    font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
+    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
+    time_image = Image.new('1', (epd.height, epd.width), 255)
+    time_draw = ImageDraw.Draw(time_image)
+    epd.display_Base(epd.getbuffer(time_image))
+    num = 0
+    sumo = 0
+    Himage = Image.new('1', (epd.height, epd.width), 255)
+    draw = ImageDraw.Draw(Himage)
     while True:
-
-
-        font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
-        font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-        font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
-
-        Himage = Image.new('1', (epd.height, epd.width), 255)
-        draw = ImageDraw.Draw(Himage)
+        num+=1
+        time_draw.rectangle((10, 10, 120, 50), fill=255)
+        time_draw.text((10, 10), time.strftime('%H:%M:%S'), font=font24, fill=0)
+        newimage = time_image.crop([10, 10, 120, 50])
+        time_image.paste(newimage, (10, 10))
+        epd.display_Partial(epd.getbuffer(time_image))
+        if num%10 ==0:
+            epd.display_Partial(epd.getbuffer(time_image))
         if alarm:
+            sumo+=1
             draw.text((20, 2), alarmType, font=font24, fill=0)
-            alarm = False
-        # draw.text((10, 20), '2.9inch e-Paper', font=font24, fill=0)
-        # draw.text((150, 0), u'微雪电子', font=font24, fill=0)
-        # draw.line((20, 50, 70, 100), fill=0)
-        # draw.line((70, 50, 20, 100), fill=0)
-        # draw.rectangle((20, 50, 70, 100), outline=0)
-        # draw.line((165, 50, 165, 100), fill=0)
-        # draw.line((140, 75, 190, 75), fill=0)
-        # draw.arc((140, 50, 190, 100), 0, 360, fill=0)
-        # draw.rectangle((80, 50, 130, 100), fill=0)
-        # draw.chord((200, 50, 250, 100), 0, 360, fill=0)
-        # Himage = Himage.transpose(method=Image.ROTATE_180)
-            epd.display(epd.getbuffer(Himage))
-            time.sleep(8)
-            epd.Clear(0xFF)
+            if sumo==200:
+                alarm = False
+                draw.text((20, 2), '', font=font24, fill=0)
+                sumo = 0
+            epd.display_Partial(epd.getbuffer(Himage))
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
