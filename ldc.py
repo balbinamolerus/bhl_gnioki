@@ -50,7 +50,7 @@ def screen():
         if alarm:
             sumo+=1
             draw.text((10, 5), alarmType, font=font24, fill=0)
-            if sumo==20:
+            if sumo==10:
                 alarm = False
                 draw.rectangle((10, 5, 34, 29), fill=255)
                 sumo = 0
