@@ -3,6 +3,8 @@ from lib.waveshare_epd import epd2in9_V2
 import time
 import paho.mqtt.client as mqtt
 from PIL import Image, ImageDraw, ImageFont
+alarm = False
+alarmType = ''
 
 def on_message(client, userdata, message):
     global alarm
@@ -29,8 +31,6 @@ libdir = '/home/pi/bhl/bhl_gnioki/lib'
 def screen():
     global alarm
     global alarmType
-    alarm = False
-    alarmType = ''
     while True:
         epd = epd2in9_V2.EPD()
         epd.init()
