@@ -38,6 +38,7 @@ def screen():
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
+    print(epd.width, epd.height)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M')
     draw.text((30, 70), lastTime, font=font24, fill=0)
