@@ -12,7 +12,7 @@ def powiadomienie():
 		time.sleep(0.05)
 		servo.detach()
 		val+=1
-		if val==10:
+		if val==20:
 			break
 
 powiadomienie()
