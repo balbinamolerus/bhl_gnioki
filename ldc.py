@@ -10,6 +10,7 @@ def on_message(client, userdata, message):
     if message.topic == "alarm":
         alarm = True
         alarmType = str(message.payload.decode("utf-8"))
+        print('cipsko')
 
 broker_address = "192.168.137.50"
 client = mqtt.Client()
@@ -110,5 +111,5 @@ def screen():
         epd.sleep()
 
 client.loop_start()
-client.subscribe([("alarm", 0)])
+client.subscribe([("alarm", 1)])
 screen()
