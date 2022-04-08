@@ -1,8 +1,8 @@
 import sys
 import os
 
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+picdir = '/home/pi/bhl/bhl_gnioki/pic'
+libdir = '/home/pi/bhl/bhl_gnioki/lib'
 print(libdir)
 if os.path.exists(libdir):
     sys.path.append(libdir)
