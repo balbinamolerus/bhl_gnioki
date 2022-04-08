@@ -1,8 +1,8 @@
 import sys
 import os
 
-picdir = '/home/pi/bhl/bhl_gnioki/pic/'
-libdir = '/home/pi/bhl/bhl_gnioki/lib/'
+picdir = '/home/pi/bhl/bhl_gnioki/pic'
+libdir = '/home/pi/bhl/bhl_gnioki/lib'
 print(libdir)
 if os.path.exists(libdir):
     sys.path.append(libdir)
@@ -26,7 +26,7 @@ try:
     # Drawing on the image
     logging.info("1.Drawing on the image...")
     image = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-
+    print(os.path.join(picdir, 'Font.ttc'))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     print(font)
