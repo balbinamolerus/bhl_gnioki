@@ -52,7 +52,7 @@ def screen():
             draw.text((10, 5), alarmType, font=font24, fill=0)
             if sumo==10:
                 alarm = False
-                draw.rectangle((10, 5, 34, 29), fill=255)
+                draw.rectangle((10, 5, 288, 29), fill=255)
                 sumo = 0
         epd.display_Partial(epd.getbuffer(Himage))
 
