@@ -41,19 +41,18 @@ def screen():
     print(epd.width, epd.height)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M')
-    draw.text((30, 70), lastTime, font=font24, fill=0)
+    draw.text((80, 250), lastTime, font=font24, fill=0)
     epd.display_Partial(epd.getbuffer(Himage))
     while True:
-        # if time.strftime('%H:%M')!=lastTime:
-        #     draw.rectangle((70, 500, 100, 530, fill=255))
-        #     draw.text((70, 500), time.strftime('%H:%M'), font=font24, fill=0)
-
+        if time.strftime('%H:%M')!=lastTime:
+            draw.rectangle((80, 250, 104, 274), fill=255)
+            draw.text((80, 250), time.strftime('%H:%M'), font=font24, fill=0)
         if alarm:
             sumo+=1
             draw.text((10, 5), alarmType, font=font24, fill=0)
             if sumo==20:
                 alarm = False
-                draw.rectangle((20, 5, 30, 15), fill=255)
+                draw.rectangle((10, 5, 34, 29), fill=255)
                 sumo = 0
         epd.display_Partial(epd.getbuffer(Himage))
 
