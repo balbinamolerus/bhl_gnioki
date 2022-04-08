@@ -44,17 +44,21 @@ def screen():
     draw.text((200, 80), lastTime, font=font24, fill=0)
     epd.display_Partial(epd.getbuffer(Himage))
     while True:
-        if time.strftime('%H:%M')!=lastTime:
-            draw.rectangle((200, 80, 290, 104), fill=255)
-            draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
-        if alarm:
-            sumo+=1
-            draw.text((10, 5), alarmType, font=font24, fill=0)
-            if sumo==10:
-                alarm = False
-                draw.rectangle((10, 5, 288, 29), fill=255)
-                sumo = 0
-        epd.display_Partial(epd.getbuffer(Himage))
+        try:
+            if time.strftime('%H:%M')!=lastTime:
+                draw.rectangle((200, 80, 290, 104), fill=255)
+                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
+            if alarm:
+                sumo+=1
+                draw.text((10, 5), alarmType, font=font24, fill=0)
+                if sumo==10:
+                    alarm = False
+                    draw.rectangle((10, 5, 288, 29), fill=255)
+                    sumo = 0
+            epd.display_Partial(epd.getbuffer(Himage))
+        except KeyboardInterrupt:
+            epd2in9_V2.epdconfig.module_exit()
+            exit()
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
