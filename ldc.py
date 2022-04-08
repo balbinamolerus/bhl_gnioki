@@ -32,8 +32,10 @@ def screen():
     global alarmType
     epd = epd2in9_V2.EPD()
     epd.init()
+    epd.Clear(0xFF)
+
     while True:
-        epd.Clear(0xFF)
+
 
         font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
         font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
@@ -57,6 +59,7 @@ def screen():
         # Himage = Himage.transpose(method=Image.ROTATE_180)
             epd.display(epd.getbuffer(Himage))
             time.sleep(8)
+            epd.Clear(0xFF)
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
