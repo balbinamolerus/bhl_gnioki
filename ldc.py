@@ -29,6 +29,7 @@ try:
 
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    print(font)
 
     draw.text((5, 0), 'hello world', font=font, fill=0)
     draw.text((15, 40), u'微雪电子', font=font, fill=0)
