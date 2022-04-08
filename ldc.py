@@ -1,5 +1,4 @@
 import os
-import logging
 from lib.waveshare_epd import epd2in9_V2
 import time
 from PIL import Image, ImageDraw, ImageFont
@@ -10,21 +9,18 @@ picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
 
 try:
-    logging.info("epd2in9 V2 Demo")
-    epd = epd2in9_V2.EPD()
 
-    logging.info("init and Clear")
+    epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
 
+    font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
 
-    # Drawing on the Horizontal image
-    logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
-    draw.text((20, 0), 'sraka pawiana', font=font24, fill=0)
+    draw.text((20, 0), 'sraka pawiana', font=font36, fill=0)
     # draw.text((10, 20), '2.9inch e-Paper', font=font24, fill=0)
     # draw.text((150, 0), u'微雪电子', font=font24, fill=0)
     # draw.line((20, 50, 70, 100), fill=0)
