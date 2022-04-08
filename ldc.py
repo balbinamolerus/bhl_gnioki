@@ -1,8 +1,8 @@
 import sys
 import os
 
-picdir = '/home/pi/bhl/bhl_gnioki/pic'
-libdir = '/home/pi/bhl/bhl_gnioki/lib'
+picdir = '/home/pi/bhl/bhl_gnioki/pic/'
+libdir = '/home/pi/bhl/bhl_gnioki/lib/'
 print(libdir)
 if os.path.exists(libdir):
     sys.path.append(libdir)
