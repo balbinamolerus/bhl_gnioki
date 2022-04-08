@@ -14,4 +14,4 @@ try:
 		if val < -0.3:
 			x = -x
 except KeyboardInterrupt:
-	print("Program stopped")
+	print("Program stopfgped")
