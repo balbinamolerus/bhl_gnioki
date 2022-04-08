@@ -1,11 +1,18 @@
 from gpiozero import Servo
-from time import sleep
+import time
 
-servo = Servo(14)
-val = 1
-try:
+def powiadomienie():
+	servo = Servo(14)
+	val = 0
 	while True:
-		val=-val
-		servo.value = val
-except KeyboardInterrupt:
-	print("Program stopfgped")
+		servo.max()
+		time.sleep(0.05)
+		servo.detach()
+		servo.min()
+		time.sleep(0.05)
+		servo.detach()
+		val+=1
+		if val==10:
+			break
+
+powiadomienie()
