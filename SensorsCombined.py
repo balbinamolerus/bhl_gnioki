@@ -112,6 +112,8 @@ while True:
             ctr -= 0.5
         if alert:
             tele.send_message("fall detected! contact your daddy")
+        else:
+            GPIO.output(buzzer, GPIO.LOW)
         time.sleep(1)
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
         GPIO.output(buzzer, GPIO.HIGH)
