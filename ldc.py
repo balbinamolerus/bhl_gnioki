@@ -44,9 +44,9 @@ def screen():
     draw.text((30, 70), lastTime, font=font24, fill=0)
     epd.display_Partial(epd.getbuffer(Himage))
     while True:
-        if time.strftime('%H:%M')!=lastTime:
-            draw.rectangle((70, 500, 100, 530, fill=255))
-            draw.text((70, 500), time.strftime('%H:%M'), font=font24, fill=0)
+        # if time.strftime('%H:%M')!=lastTime:
+        #     draw.rectangle((70, 500, 100, 530, fill=255))
+        #     draw.text((70, 500), time.strftime('%H:%M'), font=font24, fill=0)
 
         if alarm:
             sumo+=1
