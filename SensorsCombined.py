@@ -119,8 +119,22 @@ while True:
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
         GPIO.output(buzzer, GPIO.HIGH)
         client.publish("alarm", "CO2")
-        tele.send_message("CO2 detected! contact your daddy")
+        ctr = 5
+        alert = True
+        while ctr > 0:
+            gas = GPIO.input(switch)
+            p = GPIO.input(play)
+            if gas == GPIO.HIGH or p == GPIO.LOW:
+                alert = False
+                break
+            time.sleep(0.1)
+            ctr -= 0.1
+        if alert:
+            tele.send_message("CO2 detected! contact your daddy")
+        else:
+            GPIO.output(buzzer, GPIO.LOW)
         time.sleep(1)
+        p = GPIO.HIGH
     else:
         GPIO.output(buzzer, GPIO.LOW)
 
