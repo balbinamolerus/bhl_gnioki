@@ -36,25 +36,22 @@ def screen():
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
-    time_image = Image.new('1', (epd.height, epd.width), 255)
-    time_draw = ImageDraw.Draw(time_image)
-    epd.display_Base(epd.getbuffer(time_image))
-    num = 0
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M:%S')
     draw.text((30, 70), lastTime, font=font24, fill=0)
+    epd.display_Partial(epd.getbuffer(Himage))
     while True:
         if time.strftime('%H:%M:%S')!=lastTime:
-            draw.text((30, 70), '', font=font24, fill=0)
+            draw.rectangle((30, 70, 120, 160), fill=255)
             draw.text((30, 70), time.strftime('%H:%M:%S'), font=font24, fill=0)
         if alarm:
             sumo+=1
-            draw.text((20, 2), alarmType, font=font24, fill=0)
+            draw.text((20, 5), alarmType, font=font24, fill=0)
             if sumo==200:
                 alarm = False
-                draw.text((20, 2), '', font=font24, fill=0)
+                draw.rectangle((20, 5, 30, 15), fill=255)
                 sumo = 0
         epd.display_Partial(epd.getbuffer(Himage))
 
