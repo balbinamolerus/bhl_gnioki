@@ -1,9 +1,3 @@
-import sys
-import os
-
-picdir = '/home/pi/bhl/bhl_gnioki/pic'
-libdir = '/home/pi/bhl/bhl_gnioki/lib'
-import sys
 import os
 import logging
 from waveshare_epd import epd2in9_V2
@@ -12,6 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 import traceback
 
 logging.basicConfig(level=logging.DEBUG)
+picdir = '/home/pi/bhl/bhl_gnioki/pic'
+libdir = '/home/pi/bhl/bhl_gnioki/lib'
 
 try:
     logging.info("epd2in9 V2 Demo")
