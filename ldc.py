@@ -44,14 +44,7 @@ def screen():
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
     while True:
-        num+=1
-        time_draw.rectangle((500, 1000, 120, 50), fill=255)
-        time_draw.text((10, 10), time.strftime('%H:%M:%S'), font=font24, fill=0)
-        newimage = time_image.crop([10, 10, 120, 50])
-        time_image.paste(newimage, (10, 10))
-        epd.display_Partial(epd.getbuffer(time_image))
-        if num%10 ==0:
-            epd.display_Partial(epd.getbuffer(time_image))
+        draw.text((30, 70), time.strftime('%H:%M:%S'), font=font24, fill=0)
         if alarm:
             sumo+=1
             draw.text((20, 2), alarmType, font=font24, fill=0)
@@ -59,7 +52,7 @@ def screen():
                 alarm = False
                 draw.text((20, 2), '', font=font24, fill=0)
                 sumo = 0
-            epd.display_Partial(epd.getbuffer(Himage))
+        epd.display_Partial(epd.getbuffer(Himage))
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
