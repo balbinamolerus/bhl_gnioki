@@ -64,54 +64,6 @@ def screen():
             epd2in9_V2.epdconfig.module_exit()
             exit()
 
-        # Drawing on the Vertical image
-        # logging.info("2.Drawing on the Vertical image...")
-        # Limage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-        # draw = ImageDraw.Draw(Limage)
-        # draw.text((2, 0), 'hello world', font=font18, fill=0)
-        # draw.text((2, 20), '2.9inch epd', font=font18, fill=0)
-        # draw.text((20, 50), u'微雪电子', font=font18, fill=0)
-        # draw.line((10, 90, 60, 140), fill=0)
-        # draw.line((60, 90, 10, 140), fill=0)
-        # draw.rectangle((10, 90, 60, 140), outline=0)
-        # draw.line((95, 90, 95, 140), fill=0)
-        # draw.line((70, 115, 120, 115), fill=0)
-        # draw.arc((70, 90, 120, 140), 0, 360, fill=0)
-        # draw.rectangle((10, 150, 60, 200), fill=0)
-        # draw.chord((70, 150, 120, 200), 0, 360, fill=0)
-        # epd.display(epd.getbuffer(Limage))
-        # time.sleep(2)
-        #
-        # logging.info("3.read bmp file")
-        # Himage = Image.open(os.path.join(picdir, '2in9.bmp'))
-        # epd.display(epd.getbuffer(Himage))
-        # time.sleep(2)
-        #
-        # logging.info("4.read bmp file on window")
-        # Himage2 = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-        # bmp = Image.open(os.path.join(picdir, '100x100.bmp'))
-        # Himage2.paste(bmp, (50, 10))
-        # epd.display(epd.getbuffer(Himage2))
-        # time.sleep(2)
-        #
-        # # partial update
-        # logging.info("5.show time")
-        # time_image = Image.new('1', (epd.height, epd.width), 255)
-        # time_draw = ImageDraw.Draw(time_image)
-        # epd.display_Base(epd.getbuffer(time_image))
-        # num = 0
-        # while (True):
-        #     time_draw.rectangle((10, 10, 120, 50), fill=255)
-        #     time_draw.text((10, 10), time.strftime('%H:%M:%S'), font=font24, fill=0)
-        #     newimage = time_image.crop([10, 10, 120, 50])
-        #     time_image.paste(newimage, (10, 10))
-        #     epd.display_Partial(epd.getbuffer(time_image))
-        #
-        #     num = num + 1
-        #     if (num == 10):
-        #         break
-
-
 client.loop_start()
 client.subscribe([("alarm", 1)])
 screen()
