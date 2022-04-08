@@ -51,11 +51,12 @@ def screen():
             if alarm:
                 sumo+=1
                 draw.text((10, 5), alarmType, font=font24, fill=0)
-                if sumo==10:
+                if sumo==2:
                     alarm = False
                     draw.rectangle((10, 5, 288, 29), fill=255)
                     sumo = 0
             epd.display_Partial(epd.getbuffer(Himage))
+            time.sleep(2)
         except KeyboardInterrupt:
             epd2in9_V2.epdconfig.module_exit()
             exit()
