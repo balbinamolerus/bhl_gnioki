@@ -2,9 +2,7 @@ import os
 from lib.waveshare_epd import epd2in9_V2
 import time
 from PIL import Image, ImageDraw, ImageFont
-import traceback
 
-logging.basicConfig(level=logging.DEBUG)
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
 
