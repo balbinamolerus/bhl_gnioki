@@ -59,6 +59,7 @@ def screen():
             time.sleep(2)
         except KeyboardInterrupt:
             draw.rectangle((200, 80, 290, 104), fill=255)
+            epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
             epd2in9_V2.epdconfig.module_exit()
             exit()
