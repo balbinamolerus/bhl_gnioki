@@ -28,6 +28,8 @@ libdir = '/home/pi/bhl/bhl_gnioki/lib'
 def screen():
     global alarm
     global alarmType
+    alarm = False
+    alarmType = ''
     while True:
         epd = epd2in9_V2.EPD()
         epd.init()
