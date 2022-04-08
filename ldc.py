@@ -12,7 +12,6 @@ def on_message(client, userdata, message):
     if message.topic == "alarm":
         alarm = True
         alarmType = str(message.payload.decode("utf-8"))
-        print('rzerzucha')
 
 broker_address = "192.168.137.50"
 client = mqtt.Client()
@@ -31,10 +30,9 @@ libdir = '/home/pi/bhl/bhl_gnioki/lib'
 def screen():
     global alarm
     global alarmType
+    epd = epd2in9_V2.EPD()
+    epd.init()
     while True:
-        print(alarm)
-        epd = epd2in9_V2.EPD()
-        epd.init()
         epd.Clear(0xFF)
 
         font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
@@ -44,8 +42,7 @@ def screen():
         Himage = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(Himage)
         if alarm:
-            print('rzerzucha2')
-            draw.text((20, 2), alarmType, font=font36, fill=0)
+            draw.text((20, 2), alarmType, font=font24, fill=0)
             alarm = False
         # draw.text((10, 20), '2.9inch e-Paper', font=font24, fill=0)
         # draw.text((150, 0), u'微雪电子', font=font24, fill=0)
@@ -59,7 +56,7 @@ def screen():
         # draw.chord((200, 50, 250, 100), 0, 360, fill=0)
         # Himage = Himage.transpose(method=Image.ROTATE_180)
             epd.display(epd.getbuffer(Himage))
-            time.sleep(5)
+            time.sleep(8)
 
         # Drawing on the Vertical image
         # logging.info("2.Drawing on the Vertical image...")
@@ -108,9 +105,6 @@ def screen():
         #     if (num == 10):
         #         break
 
-        epd.init()
-        epd.Clear(0xFF)
-        epd.sleep()
 
 client.loop_start()
 client.subscribe([("alarm", 1)])
