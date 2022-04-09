@@ -30,7 +30,7 @@ client.loop_start()
 
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
-textpath = 'a.txt'
+textpath = '/home/pi/bhl/bhl_gnioki/alerts.txt'
 def screen():
     global alarm
     global alarmType
