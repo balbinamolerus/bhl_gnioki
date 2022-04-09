@@ -30,7 +30,7 @@ client.loop_start()
 
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
-textpath = 'a.txt'
+textpath = '/home/pi/bhl/bhl_gnioki/alerts.txt'
 def screen():
     global alarm
     global alarmType
@@ -39,17 +39,17 @@ def screen():
     epd.init()
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 24)
+    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
+    fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 48)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
     print(epd.width, epd.height)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M')
-    draw.text((200, 80), lastTime, font=font24, fill=0)
+    draw.text((5, 80), lastTime, font=font24, fill=0) #200,80
     epd.display_Partial(epd.getbuffer(Himage))
-    draw.text((5, 80), "Amelia", font=fontAmelia, fill=0)
+    draw.text((150, 50), "Amelia", font=fontAmelia, fill=0)
     while True:
         try:
             current_time = time.strftime('%H:%M')
@@ -65,17 +65,18 @@ def screen():
                         if current_time == time1:
                             alert = event
                             client.publish('alert', alert)
-                            draw.text((50, 5), alert, font=font24, fill=0)
+                            draw.text((10, 5), alert, font=font24, fill=0)
                         elif current_time[:2]==time1[:2] and int(current_time[-2:])-int(time1[-2:])!=0:
-                            draw.rectangle((50, 5, 80, 45), fill=255)
-                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
+                            draw.rectangle((10, 5, 288, 43), fill=255)
+                draw.rectangle((5, 80, 95, 120), fill=255)#200,80
+                draw.text((5, 80), time.strftime('%H:%M'), font=font24, fill=0)
                 lastTime = current_time
             if alarm:
                 sumo += 1
                 draw.text((10, 5), alarmType, font=font24, fill=0)
                 if sumo == 2:
                     alarm = False
-                    draw.rectangle((10, 5, 288, 32), fill=255)
+                    draw.rectangle((10, 5, 288, 43), fill=255)
                     sumo = 0
             epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
