@@ -11,6 +11,7 @@ import sqlite3
 # #     print(row[2])
 
 con = sqlite3.connect('/home/pi/bhl/bhl_gnioki/interface/interface/db.sqlite3')
+con.row_factory = sqlite3.Row
 cursor = con.cursor()
 cursor.execute("SELECT name FROM sqlite_master;")
 print(cursor.fetchall())
