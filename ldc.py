@@ -65,6 +65,7 @@ def screen():
                     elif current_time[:2]==row[3][:2] and int(current_time[-2:])-int(row[3][-2:])!=0:
                         draw.rectangle((50, 5, 80, 45), fill=255)
                 draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
+                lastTime = current_time
             if alarm:
                 sumo += 1
                 draw.text((10, 5), alarmType, font=font24, fill=0)
