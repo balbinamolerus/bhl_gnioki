@@ -62,7 +62,6 @@ def screen():
                     if current_time == row[3]:
                         # row[1] - nazwwa powiadomienia
                         client.publish('alert', 'alert')
-                        pass
                 draw.rectangle((200, 80, 290, 104), fill=255)
                 draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
             if alarm:
