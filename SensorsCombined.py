@@ -32,20 +32,8 @@ GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
 counter = 0
 
-def powiadomienie():
-    servo = Servo(37)
-    val = 0
-    while True:
-        servo.max()
-        time.sleep(0.05)
-        servo.detach()
-        servo.min()
-        time.sleep(0.05)
-        servo.detach()
-        val += 1
-        print("chuj")
-        if val ==30:
-            break
+# def powiadomienie():
+
 
 def on_message(client, userdata, message):
     global counter
@@ -53,7 +41,19 @@ def on_message(client, userdata, message):
         counter = 0
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
-        powiadomienie()
+        servo = Servo(37)
+        val = 0
+        while True:
+            servo.max()
+            time.sleep(0.05)
+            servo.detach()
+            servo.min()
+            time.sleep(0.05)
+            servo.detach()
+            val += 1
+            print("aa")
+            if val == 30:
+                break
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
 
