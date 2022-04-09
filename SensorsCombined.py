@@ -35,7 +35,7 @@ def on_message(client, userdata, message):
     if message.topic == "alert":
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
-        time.sleep(2)
+        time.sleep(2.2)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
 
