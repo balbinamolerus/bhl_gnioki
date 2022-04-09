@@ -1,0 +1,126 @@
+{% extends "hmi/base.html" %}
+{% block title %}Request details{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+      <h3>Question</h3>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group mr-2" role="group" aria-label="Dzień tygodnia">
+              <div class="btn-group-vertical">
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="tabletki" name="aktywnosc" id="pon">
+                    <label class="btn-lg btn-primary" for="pon">Tabletki</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="lekarz"  name="aktywnosc" id="wt">
+                    <label class="btn-lg btn-primary" for="wt">Wizyta u lekarza</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="bingo"  name="aktywnosc" id="sr">
+                    <label class="btn-lg btn-primary" for="sr">Bingo</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="lekarz"  name="aktywnosc" id="czw">
+                    <label class="btn-lg btn-primary" for="czw">Zadzwonić do wnuczka</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="ciasto"  name="aktywnosc" id="pt">
+                    <label class="btn-lg btn-primary" for="pt">Upiecz ciasto</label>
+                  </div>
+              </div>
+           </div>
+          <div class="btn-group mr-2" role="group" aria-label="Second group">
+              <div class="btn-group-vertical">
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="pon" name="dzien" id="pon">
+                    <label class="btn-lg btn-primary" for="pon">Poniedziałek</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="wt"  name="dzien" id="wt">
+                    <label class="btn-lg btn-primary" for="wt">Wtorek</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="sr"  name="dzien" id="sr">
+                    <label class="btn-lg btn-primary" for="sr">Środa</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="czw"  name="dzien" id="czw">
+                    <label class="btn-lg btn-primary" for="czw">Czwartek</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="pt"  name="dzien" id="pt">
+                    <label class="btn-lg btn-primary" for="pt">Piątek</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="sb"  name="dzien" id="sb">
+                    <label class="btn-lg btn-primary" for="sb">Sobota</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" value="nd"  name="dzien" id="nd">
+                    <label class="btn-lg btn-primary" for="nd">Niedziela</label>
+                  </div>
+                </div>
+            </div>
+
+              <div class="btn-group mr-2" role="group" aria-label="Third group">
+                      <div class="btn-group-vertical">
+                            <select class="form-select" aria-label="Default select example" name="godzina">
+                              <option selected>Godzina</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                            </select>
+                      </div>
+              </div>
+              <div class="btn-group mr-2" role="group" aria-label="minuty">
+                      <div class="btn-group-vertical">
+                            <select class="form-select input-lg" aria-label="Default select example" name="minuty">
+                              <option selected>Minuty</option>
+                              <option value="00">00</option>
+                              <option value="05">05</option>
+                              <option value="10">10</option>
+                              <option value="15">15</option>
+                              <option value="20">20</option>
+                              <option value="25">25</option>
+                              <option value="30">30</option>
+                              <option value="35">35</option>
+                              <option value="40">40</option>
+                              <option value="45">45</option>
+                              <option value="50">50</option>
+                              <option value="55">55</option>
+                            </select>
+                      </div>
+              </div>
+            </div>
+
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
