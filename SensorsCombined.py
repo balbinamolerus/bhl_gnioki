@@ -31,8 +31,12 @@ GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
 
 
-
 def on_message(client, userdata, message):
+    if message.topic == "alert":
+        mixer.music.load("/home/pi/Documents/alert.mp3")
+        mixer.music.play()
+        time.sleep(2)
+        mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
     pass
 
 broker_address = "192.168.137.50"
