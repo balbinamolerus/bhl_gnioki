@@ -6,18 +6,18 @@ from pygame import mixer
 from telegram import Telegram
 from gpiozero import Servo
 
-#some MPU6050 Registers and their Address
-PWR_MGMT_1   = 0x6B
-SMPLRT_DIV   = 0x19
-CONFIG       = 0x1A
-GYRO_CONFIG  = 0x1B
-INT_ENABLE   = 0x38
+# some MPU6050 Registers and their Address
+PWR_MGMT_1 = 0x6B
+SMPLRT_DIV = 0x19
+CONFIG = 0x1A
+GYRO_CONFIG = 0x1B
+INT_ENABLE = 0x38
 ACCEL_XOUT_H = 0x3B
 ACCEL_YOUT_H = 0x3D
 ACCEL_ZOUT_H = 0x3F
-GYRO_XOUT_H  = 0x43
-GYRO_YOUT_H  = 0x45
-GYRO_ZOUT_H  = 0x47
+GYRO_XOUT_H = 0x43
+GYRO_YOUT_H = 0x45
+GYRO_ZOUT_H = 0x47
 tele = Telegram()
 buzzer = 20
 switch = 16
@@ -30,31 +30,36 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
+GPIO.setup(26, GPIO.OUT)
 counter = 0
+pwm = GPIO.PWM(26, 50)
+
+
 
 # def powiadomienie():
 
 
 def on_message(client, userdata, message):
     global counter
+    global pwm
     if message.topic == "alert":
         counter = 0
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
-        time.sleep(3)
+        # time.sleep(3)
         # servo = Servo(37)
-        # val = 0
-        # while True:
-        #     servo.max()
-        #     time.sleep(0.05)
-        #     servo.detach()
-        #     servo.min()
-        #     time.sleep(0.05)
-        #     servo.detach()
-        #     val += 1
-        #     print("aa")
-        #     if val == 30:
-        #         break
+        val = 0
+        pwm.start(0)
+        while True:
+            pwm.ChangeDutyCycle(5)
+            time.sleep(0.05)
+            pwm.ChangeDutyCycle(10)
+            time.sleep(0.05)
+            val += 1
+            print("aa")
+            if val == 30:
+                pwm.stop()
+                break
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
 
@@ -66,6 +71,7 @@ client.connect(broker_address, 1880)
 client.subscribe([("alert", 1)])
 
 client.loop_start()
+
 
 def MPU_Init():
     # write to sample rate register
@@ -96,6 +102,7 @@ def read_raw_data(addr):
     if (value > 32768):
         value = value - 65536
     return value
+
 
 bus = smbus.SMBus(1)  # or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68  # MPU6050 device address
