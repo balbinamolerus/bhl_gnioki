@@ -36,6 +36,7 @@ def screen():
     global alarmType
     con = sqlite3.connect('/home/pi/bhl/bhl_gnioki/interface/interface/db.sqlite3')
     cur = con.cursor()
+    cur.execute("SELECT * FROM 'hmi_appointment'")
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
@@ -56,7 +57,7 @@ def screen():
             current_time = time.strftime('%H:%M')
             if current_time != lastTime:
                 print('xd')
-                cur.execute("SELECT * FROM 'hmi_appointment'")
+
                 rows = cur.fetchall()
                 for row in rows:
                     if current_time == row[3]:
