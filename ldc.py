@@ -65,10 +65,10 @@ def screen():
                         if current_time == time1:
                             alert = event
                             client.publish('alert', alert)
-                            draw.text((50, 5), alert, font=font24, fill=0)
+                            draw.text((10, 5), alert, font=font24, fill=0)
                         elif current_time[:2]==time1[:2] and int(current_time[-2:])-int(time1[-2:])!=0:
-                            draw.rectangle((50, 5, 80, 45), fill=255)
-                draw.rectangle((5, 80, 95, 104), fill=255)#200,80
+                            draw.rectangle((10, 5, 288, 43), fill=255)
+                draw.rectangle((5, 80, 95, 120), fill=255)#200,80
                 draw.text((5, 80), time.strftime('%H:%M'), font=font24, fill=0)
                 lastTime = current_time
             if alarm:
@@ -76,7 +76,7 @@ def screen():
                 draw.text((10, 5), alarmType, font=font24, fill=0)
                 if sumo == 2:
                     alarm = False
-                    draw.rectangle((10, 5, 288, 32), fill=255)
+                    draw.rectangle((10, 5, 288, 43), fill=255)
                     sumo = 0
             epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
