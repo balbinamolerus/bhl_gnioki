@@ -110,10 +110,19 @@ while True:
                 break
             time.sleep(0.1)
             ctr -= 0.1
+        GPIO.output(buzzer, GPIO.LOW)
         if alert:
             tele.send_message("fall detected! contact your daddy")
-        else:
-            GPIO.output(buzzer, GPIO.LOW)
+            while True:
+                mixer.music.load("/home/pi/Documents/help.mp3")
+                mixer.music.play()
+                acc_y = read_raw_data(ACCEL_YOUT_H)
+                Ay = acc_y / 16384.0
+                p = GPIO.input(play)
+                if Ay >= 0.4 or p == GPIO.LOW:
+                    mixer.music.pause()
+                    mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
+                    break
         time.sleep(1)
         p = GPIO.HIGH
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
