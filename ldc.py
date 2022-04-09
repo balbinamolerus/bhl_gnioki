@@ -3,8 +3,11 @@ from lib.waveshare_epd import epd2in9_V2
 import time
 import paho.mqtt.client as mqtt
 from PIL import Image, ImageDraw, ImageFont
+
 alarm = False
 alarmType = ''
+import sqlite3
+
 
 def on_message(client, userdata, message):
     global alarm
@@ -12,6 +15,7 @@ def on_message(client, userdata, message):
     if message.topic == "alarm":
         alarm = True
         alarmType = str(message.payload.decode("utf-8"))
+
 
 broker_address = "192.168.137.50"
 client = mqtt.Client()
@@ -30,6 +34,8 @@ libdir = '/home/pi/bhl/bhl_gnioki/lib'
 def screen():
     global alarm
     global alarmType
+    con = sqlite3.connect('interface/interface/db.sqlite3')
+    cur = con.cursor()
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
@@ -45,24 +51,35 @@ def screen():
     epd.display_Partial(epd.getbuffer(Himage))
     while True:
         try:
-            if time.strftime('%H:%M')!=lastTime:
-                draw.rectangle((200, 80, 290, 104), fill=255)
+            current_time = time.strftime('%H:%M')
+            if current_time != lastTime:
+                cur.execute("SELECT * FROM 'hmi_appointment'")
+                rows = cur.fetchall()
+                for row in rows:
+                    if current_time == row[3]:
+                        alert = row[1]
+                        client.publish('alert', alert)
+                        draw.text((50, 5), alert, font=font24, fill=0)
+                    elif current_time[:2]==row[3][:2] and int(current_time[-2:])-int(row[3][-2:])!=0:
+                        draw.rectangle((50, 5, 80, 45), fill=255)
                 draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
             if alarm:
-                sumo+=1
+                sumo += 1
                 draw.text((10, 5), alarmType, font=font24, fill=0)
-                if sumo==2:
+                if sumo == 2:
                     alarm = False
                     draw.rectangle((10, 5, 288, 32), fill=255)
                     sumo = 0
             epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
+            lastTime = current_time
         except KeyboardInterrupt:
             draw.rectangle((200, 80, 290, 104), fill=255)
             epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
             epd2in9_V2.epdconfig.module_exit()
             exit()
+
 
 client.loop_start()
 client.subscribe([("alarm", 1)])
