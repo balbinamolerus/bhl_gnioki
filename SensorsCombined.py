@@ -113,9 +113,9 @@ while True:
         GPIO.output(buzzer, GPIO.LOW)
         if alert:
             tele.send_message("fall detected! contact your daddy")
+            mixer.music.load("/home/pi/Documents/help.mp3")
+            mixer.music.play(loops=-1)
             while True:
-                mixer.music.load("/home/pi/Documents/help.mp3")
-                mixer.music.play(loops=-1)
                 acc_y = read_raw_data(ACCEL_YOUT_H)
                 Ay = acc_y / 16384.0
                 p = GPIO.input(play)
