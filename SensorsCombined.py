@@ -128,8 +128,9 @@ while True:
     elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
         client.publish("alarm", "CO2")
         mixer.music.load("/home/pi/Documents/gas.mp3")
+        time.sleap(0.5)
         mixer.music.play(loops=2)
-        time.sleep(8)
+        time.sleep(7.5)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
     else:
         GPIO.output(buzzer, GPIO.LOW)
