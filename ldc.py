@@ -47,9 +47,9 @@ def screen():
     print(epd.width, epd.height)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M')
-    draw.text((200, 80), lastTime, font=font24, fill=0)
+    draw.text((0, 80), lastTime, font=font24, fill=0) #200,80
     epd.display_Partial(epd.getbuffer(Himage))
-    draw.text((5, 50), "Amelia", font=fontAmelia, fill=0)
+    draw.text((400, 50), "Amelia", font=fontAmelia, fill=0)
     while True:
         try:
             current_time = time.strftime('%H:%M')
@@ -68,8 +68,8 @@ def screen():
                             draw.text((50, 5), alert, font=font24, fill=0)
                         elif current_time[:2]==time1[:2] and int(current_time[-2:])-int(time1[-2:])!=0:
                             draw.rectangle((50, 5, 80, 45), fill=255)
-                draw.rectangle((200, 80, 290, 104), fill=255)
-                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
+                draw.rectangle((0, 80, 290, 104), fill=255)#200,80
+                draw.text((0, 80), time.strftime('%H:%M'), font=font24, fill=0)#200,80
                 lastTime = current_time
             if alarm:
                 sumo += 1
