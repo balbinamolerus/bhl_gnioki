@@ -112,7 +112,7 @@ while True:
             ctr -= 0.1
         GPIO.output(buzzer, GPIO.LOW)
         if alert:
-            tele.send_message("fall detected! contact your daddy")
+            tele.send_message("Wykryto upadek uzytkownika inteligentnej laski. Moze potrzebowac pomocy. Skontaktuj sie z nim!")
             mixer.music.load("/home/pi/Documents/help.mp3")
             mixer.music.play(loops=-1)
             while True:
