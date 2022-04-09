@@ -130,7 +130,7 @@ while True:
         mixer.music.load("/home/pi/Documents/gas.mp3")
         time.sleep(0.5)
         mixer.music.play(loops=2)
-        time.sleep(7.5)
+        time.sleep(7.85)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
     else:
         GPIO.output(buzzer, GPIO.LOW)
