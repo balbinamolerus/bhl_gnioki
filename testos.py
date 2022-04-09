@@ -4,5 +4,5 @@ with open(path) as file:
     for line in lines:
         idx = line.index(';')
         event = line[:idx]
-        time = line[idx+1:]
+        time = line[idx+1:].replace('\n','')
         print(event,' - ', time)
