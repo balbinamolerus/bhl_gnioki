@@ -55,6 +55,7 @@ def screen():
         try:
             current_time = time.strftime('%H:%M')
             if current_time != lastTime:
+                print('xd')
                 cur.execute("SELECT * FROM 'hmi_appointment'")
                 rows = cur.fetchall()
                 for row in rows:
