@@ -6,18 +6,18 @@ from pygame import mixer
 from telegram import Telegram
 from gpiozero import Servo
 
-# some MPU6050 Registers and their Address
-PWR_MGMT_1 = 0x6B
-SMPLRT_DIV = 0x19
-CONFIG = 0x1A
-GYRO_CONFIG = 0x1B
-INT_ENABLE = 0x38
+#some MPU6050 Registers and their Address
+PWR_MGMT_1   = 0x6B
+SMPLRT_DIV   = 0x19
+CONFIG       = 0x1A
+GYRO_CONFIG  = 0x1B
+INT_ENABLE   = 0x38
 ACCEL_XOUT_H = 0x3B
 ACCEL_YOUT_H = 0x3D
 ACCEL_ZOUT_H = 0x3F
-GYRO_XOUT_H = 0x43
-GYRO_YOUT_H = 0x45
-GYRO_ZOUT_H = 0x47
+GYRO_XOUT_H  = 0x43
+GYRO_YOUT_H  = 0x45
+GYRO_ZOUT_H  = 0x47
 tele = Telegram()
 buzzer = 20
 switch = 16
@@ -30,6 +30,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
+counter = 0
 
 def powiadomienie():
     servo = Servo(37)
@@ -47,14 +48,13 @@ def powiadomienie():
             break
 
 def on_message(client, userdata, message):
+    global counter
     if message.topic == "alert":
+        counter = 0
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
         powiadomienie()
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
-
-
-
 
 
 broker_address = "192.168.137.50"
@@ -65,7 +65,6 @@ client.connect(broker_address, 1880)
 client.subscribe([("alert", 1)])
 
 client.loop_start()
-
 
 def MPU_Init():
     # write to sample rate register
@@ -97,7 +96,6 @@ def read_raw_data(addr):
         value = value - 65536
     return value
 
-
 bus = smbus.SMBus(1)  # or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68  # MPU6050 device address
 
@@ -118,7 +116,7 @@ while True:
     print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
 
     # Sense CO2 or falling
-    if Ay < 0.4 and last_Ay >= 0.4:
+    if Ay < 0.4 and last_Ay >= 0.4 and counter >= 10:
         GPIO.output(buzzer, GPIO.HIGH)
         client.publish("alarm", "fall")
         ctr = 10
@@ -148,7 +146,7 @@ while True:
                     break
         time.sleep(1)
         p = GPIO.HIGH
-    elif gas == GPIO.LOW and last_gas == GPIO.HIGH:
+    elif gas == GPIO.LOW and last_gas == GPIO.HIGH and counter >= 10:
         client.publish("alarm", "CO2")
         mixer.music.load("/home/pi/Documents/gas.mp3")
         time.sleep(0.5)
@@ -170,5 +168,6 @@ while True:
     last_gas = gas
     last_Ay = Ay
     time.sleep(0.1)
+    counter += 0.1
 
 GPIO.cleanup()

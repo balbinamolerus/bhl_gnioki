@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 alarm = False
 alarmType = ''
-import sqlite3
+
 
 
 def on_message(client, userdata, message):
@@ -30,45 +30,53 @@ client.loop_start()
 
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
-
+textpath = '/home/pi/bhl/bhl_gnioki/alerts.txt'
 def screen():
     global alarm
     global alarmType
-    con = sqlite3.connect('interface/interface/db.sqlite3')
-    cur = con.cursor()
+
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
+    fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 48)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
     print(epd.width, epd.height)
     draw = ImageDraw.Draw(Himage)
     lastTime = time.strftime('%H:%M')
-    draw.text((200, 80), lastTime, font=font24, fill=0)
+    draw.text((5, 80), lastTime, font=font24, fill=0) #200,80
     epd.display_Partial(epd.getbuffer(Himage))
+    draw.text((150, 50), "Amelia", font=fontAmelia, fill=0)
     while True:
         try:
             current_time = time.strftime('%H:%M')
             if current_time != lastTime:
-                cur.execute("SELECT * FROM 'hmi_appointment'")
-                rows = cur.fetchall()
-                for row in rows:
-                    if current_time == row[3]:
-                        alert = row[1]
-                        client.publish('alert', alert)
-                        draw.text((50, 5), alert, font=font24, fill=0)
-                    elif current_time[:2]==row[3][:2] and int(current_time[-2:])-int(row[3][-2:])!=0:
-                        draw.rectangle((50, 5, 80, 45), fill=255)
-                draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
+                print('xd')
+
+                with open(textpath) as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        idx = line.index(';')
+                        event = line[:idx]
+                        time1 = line[idx + 1:].replace('\n', '')
+                        if current_time == time1:
+                            alert = event
+                            client.publish('alert', alert)
+                            draw.text((10, 5), alert, font=font24, fill=0)
+                        elif current_time[:2]==time1[:2] and int(current_time[-2:])-int(time1[-2:])!=0:
+                            draw.rectangle((10, 5, 288, 43), fill=255)
+                draw.rectangle((5, 80, 95, 120), fill=255)#200,80
+                draw.text((5, 80), time.strftime('%H:%M'), font=font24, fill=0)
+                lastTime = current_time
             if alarm:
                 sumo += 1
                 draw.text((10, 5), alarmType, font=font24, fill=0)
                 if sumo == 2:
                     alarm = False
-                    draw.rectangle((10, 5, 288, 32), fill=255)
+                    draw.rectangle((10, 5, 288, 43), fill=255)
                     sumo = 0
             epd.display_Partial(epd.getbuffer(Himage))
             time.sleep(2)
@@ -79,7 +87,6 @@ def screen():
             time.sleep(2)
             epd2in9_V2.epdconfig.module_exit()
             exit()
-
 
 client.loop_start()
 client.subscribe([("alarm", 1)])
