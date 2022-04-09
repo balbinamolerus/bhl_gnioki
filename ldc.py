@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 alarm = False
 alarmType = ''
-import sqlite3
+
 
 
 def on_message(client, userdata, message):
@@ -30,13 +30,11 @@ client.loop_start()
 
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
-
+textpath = 'a.txt'
 def screen():
     global alarm
     global alarmType
-    con = sqlite3.connect('/home/pi/bhl/bhl_gnioki/interface/interface/db.sqlite3')
-    cur = con.cursor()
-    cur.execute("SELECT * FROM 'hmi_appointment'")
+
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
@@ -58,14 +56,18 @@ def screen():
             if current_time != lastTime:
                 print('xd')
 
-                rows = cur.fetchall()
-                for row in rows:
-                    if current_time == row[3]:
-                        alert = row[1]
-                        client.publish('alert', alert)
-                        draw.text((50, 5), alert, font=font24, fill=0)
-                    elif current_time[:2]==row[3][:2] and int(current_time[-2:])-int(row[3][-2:])!=0:
-                        draw.rectangle((50, 5, 80, 45), fill=255)
+                with open(textpath) as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        idx = line.index(';')
+                        event = line[:idx]
+                        time1 = line[idx + 1:].replace('\n', '')
+                        if current_time == time1:
+                            alert = event
+                            client.publish('alert', alert)
+                            draw.text((50, 5), alert, font=font24, fill=0)
+                        elif current_time[:2]==time1[:2] and int(current_time[-2:])-int(time1[-2:])!=0:
+                            draw.rectangle((50, 5, 80, 45), fill=255)
                 draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
                 lastTime = current_time
             if alarm:
