@@ -35,11 +35,11 @@ counter = 0
 def on_message(client, userdata, message):
     global counter
     if message.topic == "alert":
+        counter = 0
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
         time.sleep(3)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
-        counter = 0
 
 
 broker_address = "192.168.137.50"
