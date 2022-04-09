@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from pygame import mixer
 from telegram import Telegram
+from gpiozero import Servo
 
 #some MPU6050 Registers and their Address
 PWR_MGMT_1   = 0x6B
@@ -33,10 +34,25 @@ GPIO.setup(play, GPIO.IN)
 
 def on_message(client, userdata, message):
     if message.topic == "alert":
+        powiadomienie()
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
         time.sleep(3)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
+
+def powiadomienie():
+	servo = Servo(26)
+	val = 0
+	while True:
+		servo.max()
+		time.sleep(0.05)
+		servo.detach()
+		servo.min()
+		time.sleep(0.05)
+		servo.detach()
+		val+=1
+		if val==20:
+			break
 
 
 broker_address = "192.168.137.50"
