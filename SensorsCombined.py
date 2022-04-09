@@ -41,19 +41,19 @@ def on_message(client, userdata, message):
         counter = 0
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
-        servo = Servo(37)
-        val = 0
-        while True:
-            servo.max()
-            time.sleep(0.05)
-            servo.detach()
-            servo.min()
-            time.sleep(0.05)
-            servo.detach()
-            val += 1
-            print("aa")
-            if val == 30:
-                break
+        # servo = Servo(37)
+        # val = 0
+        # while True:
+        #     servo.max()
+        #     time.sleep(0.05)
+        #     servo.detach()
+        #     servo.min()
+        #     time.sleep(0.05)
+        #     servo.detach()
+        #     val += 1
+        #     print("aa")
+        #     if val == 30:
+        #         break
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
 
