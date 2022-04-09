@@ -7,29 +7,31 @@
 <div class="container">
   <form method="post">
     {% csrf_token %}
+      <br>
+      <br>
       <h3>Wydarzenia</h3>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
           <div class="btn-group mr-2" role="group" aria-label="Dzień tygodnia">
               <div class="btn-group-vertical">
                   <div class="form-check">
-                    <input type="radio" class="form-check-input" value="tabletki" name="aktywnosc" id="tabletki">
-                    <label class="btn-lg btn-primary" for="tabletki">Tabletki</label>
+                    <input type="radio" class="form-check-input" value="Tabletki" name="aktywnosc" id="tabletki">
+                    <label class="btn-lg btn-warning" for="tabletki">Tabletki</label>
                   </div>
                   <div class="form-check">
-                    <input type="radio" class="form-check-input" value="lekarz"  name="aktywnosc" id="lekarz">
-                    <label class="btn-lg btn-primary" for="lekarz" >Wizyta u lekarza</label>
+                    <input type="radio" class="form-check-input" value="Lekarz"  name="aktywnosc" id="lekarz">
+                    <label class="btn-lg btn-warning" for="lekarz" >Wizyta u lekarza</label>
                   </div>
                   <div class="form-check">
-                    <input type="radio" class="form-check-input" value="bingo"  name="aktywnosc" id="bingo">
-                    <label class="btn-lg btn-primary" for="bingo">Bingo</label>
+                    <input type="radio" class="form-check-input" value="Bingo"  name="aktywnosc" id="bingo">
+                    <label class="btn-lg btn-warning" for="bingo">Bingo</label>
                   </div>
                   <div class="form-check">
-                    <input type="radio" class="form-check-input" value="lekarz"  name="aktywnosc" id="lekarz">
-                    <label class="btn-lg btn-primary" for="lekarz">Zadzwonić do wnuczka</label>
+                    <input type="radio" class="form-check-input" value="Zadzwonic do wnuczka"  name="aktywnosc" id="lekarz">
+                    <label class="btn-lg btn-warning" for="lekarz">Zadzwonić do wnuczka</label>
                   </div>
                   <div class="form-check">
-                    <input type="radio" class="form-check-input" value="ciasto"  name="aktywnosc" id="ciasto">
-                    <label class="btn-lg btn-primary" for="ciasto">Upiecz ciasto</label>
+                    <input type="radio" class="form-check-input" value="Ciasto"  name="aktywnosc" id="ciasto">
+                    <label class="btn-lg btn-warning" for="ciasto">Upiecz ciasto</label>
                   </div>
               </div>
            </div>
@@ -37,31 +39,31 @@
               <div class="btn-group-vertical">
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Poniedzialek" name="dzien" id="pon">
-                    <label class="btn-lg btn-primary" for="pon">Poniedziałek</label>
+                    <label class="btn-lg btn-info" for="pon">Poniedziałek</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Wtorek"  name="dzien" id="wt">
-                    <label class="btn-lg btn-primary" for="wt">Wtorek</label>
+                    <label class="btn-lg btn-info" for="wt">Wtorek</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Sroda"  name="dzien" id="sr">
-                    <label class="btn-lg btn-primary" for="sr">Środa</label>
+                    <label class="btn-lg btn-info" for="sr">Środa</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Czwartek"  name="dzien" id="czw">
-                    <label class="btn-lg btn-primary" for="czw">Czwartek</label>
+                    <label class="btn-lg btn-info" for="czw">Czwartek</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Piatek"  name="dzien" id="pt">
-                    <label class="btn-lg btn-primary" for="pt">Piątek</label>
+                    <label class="btn-lg btn-info" for="pt">Piątek</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Sobota"  name="dzien" id="sb">
-                    <label class="btn-lg btn-primary" for="sb">Sobota</label>
+                    <label class="btn-lg btn-info" for="sb">Sobota</label>
                   </div>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" value="Niedziela"  name="dzien" id="nd">
-                    <label class="btn-lg btn-primary" for="nd">Niedziela</label>
+                    <label class="btn-lg btn-info" for="nd">Niedziela</label>
                   </div>
                 </div>
             </div>
@@ -118,8 +120,9 @@
               </div>
             </div>
 
-
-              <button type="submit" class="btn btn-primary">Submit</button>
+<br>
+      <br>
+              <button type="submit" class="btn-lg btn-success">Zatwierdz</button>
             </form>
             <br>
             <br>
@@ -132,12 +135,12 @@
                 <br>
                 {% for wyd in wydarzenia %}
                 <div class="list-group">
-                  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start list-group-item-info">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{ wyd.name }}</h5>
                       <small>{{  wyd.day }} {{ wyd.time}}</small>
                     </div>
-                    <p class="mb-1">Weź laskę Amelie</p>
+                    <p class="mb-1">Nie zapomnij wziąć inteligentnej laski Amelii ze sobą.</p>
                   </a>
                     <br>
                   {% endfor %}
