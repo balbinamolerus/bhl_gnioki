@@ -20,7 +20,7 @@ def home(request):
         minuty = request.POST.getlist('minuty')
         app_time = godzina[0] + ':' + minuty[0]
         app = Appointment(name=name, day=day, time=app_time)
-        with open('D:\\bhl_gnioki\\interface\\hmi\\alerts.txt', 'a') as f:
+        with open('/home/pi/bhl/bhl_gnioki/alerts.txt', 'a') as f:
             f.write(name + ';' + str(godzina[0]) + ':' + str(minuty[0]) + '\n')
         app.save()
 
