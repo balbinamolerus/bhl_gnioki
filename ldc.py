@@ -39,7 +39,7 @@ def screen():
     epd.init()
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
     fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 48)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
