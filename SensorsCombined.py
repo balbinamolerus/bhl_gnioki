@@ -6,18 +6,18 @@ from pygame import mixer
 from telegram import Telegram
 from gpiozero import Servo
 
-#some MPU6050 Registers and their Address
-PWR_MGMT_1   = 0x6B
-SMPLRT_DIV   = 0x19
-CONFIG       = 0x1A
-GYRO_CONFIG  = 0x1B
-INT_ENABLE   = 0x38
+# some MPU6050 Registers and their Address
+PWR_MGMT_1 = 0x6B
+SMPLRT_DIV = 0x19
+CONFIG = 0x1A
+GYRO_CONFIG = 0x1B
+INT_ENABLE = 0x38
 ACCEL_XOUT_H = 0x3B
 ACCEL_YOUT_H = 0x3D
 ACCEL_ZOUT_H = 0x3F
-GYRO_XOUT_H  = 0x43
-GYRO_YOUT_H  = 0x45
-GYRO_ZOUT_H  = 0x47
+GYRO_XOUT_H = 0x43
+GYRO_YOUT_H = 0x45
+GYRO_ZOUT_H = 0x47
 tele = Telegram()
 buzzer = 20
 switch = 16
@@ -31,28 +31,29 @@ GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
 
+def powiadomienie():
+    servo = Servo(26)
+    val = 0
+    while True:
+        servo.max()
+        time.sleep(0.05)
+        servo.detach()
+        servo.min()
+        time.sleep(0.05)
+        servo.detach()
+        val += 1
+        if val ==30:
+            break
 
 def on_message(client, userdata, message):
     if message.topic == "alert":
-        powiadomienie()
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
-        time.sleep(3)
+        powiadomienie()
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
 
-def powiadomienie():
-	servo = Servo(26)
-	val = 0
-	while True:
-		servo.max()
-		time.sleep(0.05)
-		servo.detach()
-		servo.min()
-		time.sleep(0.05)
-		servo.detach()
-		val+=1
-		if val==20:
-			break
+
+
 
 
 broker_address = "192.168.137.50"
@@ -63,6 +64,7 @@ client.connect(broker_address, 1880)
 client.subscribe([("alert", 1)])
 
 client.loop_start()
+
 
 def MPU_Init():
     # write to sample rate register
@@ -93,6 +95,7 @@ def read_raw_data(addr):
     if (value > 32768):
         value = value - 65536
     return value
+
 
 bus = smbus.SMBus(1)  # or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68  # MPU6050 device address
@@ -130,7 +133,8 @@ while True:
             ctr -= 0.1
         GPIO.output(buzzer, GPIO.LOW)
         if alert:
-            tele.send_message("Wykryto upadek uzytkownika inteligentnej laski. Moze potrzebowac pomocy. Skontaktuj sie z nim!")
+            tele.send_message(
+                "Wykryto upadek uzytkownika inteligentnej laski. Moze potrzebowac pomocy. Skontaktuj sie z nim!")
             mixer.music.load("/home/pi/Documents/help.mp3")
             mixer.music.play(loops=-1)
             while True:
@@ -165,6 +169,5 @@ while True:
     last_gas = gas
     last_Ay = Ay
     time.sleep(0.1)
-
 
 GPIO.cleanup()
