@@ -32,7 +32,7 @@ GPIO.setup(switch, GPIO.IN)
 GPIO.setup(play, GPIO.IN)
 
 def powiadomienie():
-    servo = Servo(26)
+    servo = Servo(37)
     val = 0
     while True:
         servo.max()
@@ -42,6 +42,7 @@ def powiadomienie():
         time.sleep(0.05)
         servo.detach()
         val += 1
+        print("chuj")
         if val ==30:
             break
 
