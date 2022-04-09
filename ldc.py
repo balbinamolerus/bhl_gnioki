@@ -31,7 +31,6 @@ client.loop_start()
 picdir = '/home/pi/bhl/bhl_gnioki/pic'
 libdir = '/home/pi/bhl/bhl_gnioki/lib'
 
-
 def screen():
     global alarm
     global alarmType
@@ -52,17 +51,17 @@ def screen():
     epd.display_Partial(epd.getbuffer(Himage))
     while True:
         try:
-
             current_time = time.strftime('%H:%M')
-
             if current_time != lastTime:
                 cur.execute("SELECT * FROM 'hmi_appointment'")
                 rows = cur.fetchall()
                 for row in rows:
                     if current_time == row[3]:
-                        # row[1] - nazwwa powiadomienia
-                        client.publish('alert', 'alert')
-                draw.rectangle((200, 80, 290, 104), fill=255)
+                        alert = row[1]
+                        client.publish('alert', alert)
+                        draw.text((50, 5), alert, font=font24, fill=0)
+                    elif current_time[:2]==row[3][:2] and int(current_time[-2:])-int(row[3][-2:])!=0:
+                        draw.rectangle((50, 5, 80, 45), fill=255)
                 draw.text((200, 80), time.strftime('%H:%M'), font=font24, fill=0)
             if alarm:
                 sumo += 1
