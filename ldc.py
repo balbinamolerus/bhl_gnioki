@@ -40,7 +40,7 @@ def screen():
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 24)
+    fontAmelia = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 50)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
@@ -49,7 +49,7 @@ def screen():
     lastTime = time.strftime('%H:%M')
     draw.text((200, 80), lastTime, font=font24, fill=0)
     epd.display_Partial(epd.getbuffer(Himage))
-    draw.text((5, 80), "Amelia", font=fontAmelia, fill=0)
+    draw.text((5, 50), "Amelia", font=fontAmelia, fill=0)
     while True:
         try:
             current_time = time.strftime('%H:%M')
