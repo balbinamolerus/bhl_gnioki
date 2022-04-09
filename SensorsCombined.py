@@ -39,6 +39,7 @@ def on_message(client, userdata, message):
         mixer.music.play()
         time.sleep(3)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
+        print(counter)
         counter = 0
 
 
@@ -100,7 +101,7 @@ while True:
     p = GPIO.input(play)
     gas = GPIO.input(switch)
 
-    print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
+    # print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
 
     # Sense CO2 or falling
     if Ay < 0.4 and last_Ay >= 0.4 and counter >= 10:
@@ -156,5 +157,6 @@ while True:
     last_Ay = Ay
     time.sleep(0.1)
     counter += 0.1
+    print(counter)
 
 GPIO.cleanup()
