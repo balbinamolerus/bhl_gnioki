@@ -10,7 +10,7 @@ import sqlite3
 # # for row in rows:
 # #     print(row[2])
 
-con = sqlite3.connect('db.sqlite3')
+con = sqlite3.connect('/home/pi/bhl/bhl_gnioki/interface/interface/db.sqlite3')
 cursor = con.cursor()
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 print(cursor.fetchall())
