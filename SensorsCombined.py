@@ -32,12 +32,14 @@ GPIO.setup(play, GPIO.IN)
 
 
 def on_message(client, userdata, message):
+    print("a")
     if message.topic == "alert":
+        print("b")
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
         time.sleep(2)
         mixer.music.load("/home/pi/Documents/ElevatorMusic.mp3")
-    pass
+
 
 broker_address = "192.168.137.50"
 client = mqtt.Client()
