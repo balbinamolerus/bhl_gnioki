@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Appointment
 import time, datetime
+import random
+from django.contrib import messages
 from django.http import HttpResponse
 
 DAYS = ['Poniedzialek', 'Wtorek', 'Sroda', 'Czwartek', 'Piatek', 'Sobota', 'Niedziela']
@@ -10,7 +12,7 @@ KONIEC = ['to by nóżki nie złamała.', 'tam nie ma co jeść.', 'nie ma koła
           'przed zachodem słońca.', 'głosu nie mają.', 'niż gołąb na dachu.', 'nie utonie.']
 
 poczatek_dict = {key: value for value, key in enumerate(POCZATEK)}
-koniec_dict = {key: value for value, key in enumerate(POCZATEK)}
+koniec_dict = {key: value for value, key in enumerate(KONIEC)}
 
 def home(request):
     if request.method == 'POST':
@@ -39,7 +41,19 @@ def home(request):
 
     return render(request, 'hmi/home.html', {'wydarzenia': appointments_sorted_final[:5]})
 
-
+poczatek_list=[]
 def gra(request):
+    random_pocz = random.choice(list(poczatek_dict.keys()))
+    if request.method == 'POST':
+        dokonczenie_idx = request.POST.getlist('przyslowie')[0]
+        poczatek_list.append(poczatek_dict[random_pocz])
+        if len(poczatek_list) == 1:
+            return render(request, 'hmi/gra.html',
+                          {'poczatek': random_pocz, 'dokonczenia': koniec_dict, 'poprawna': poczatek_dict[random_pocz]})
+        print(poczatek_list[-2], dokonczenie_idx)
+        if (int(dokonczenie_idx) == int(poczatek_list[-2])):
+            messages.success(request, f'Udało się! Poprawnie dokończono przysłowie!')
+        else:
+            messages.warning(request, f'Niepoprawna odpowiedź :(. Spróbuj ponownie.')
 
-    return render(request, 'hmi/gra.html')
+    return render(request, 'hmi/gra.html', {'poczatek': random_pocz, 'dokonczenia':koniec_dict, 'poprawna': poczatek_dict[random_pocz]})
