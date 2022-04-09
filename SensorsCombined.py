@@ -114,6 +114,7 @@ while True:
         if alert:
             tele.send_message("fall detected! contact your daddy")
             while True:
+                mixer.music.unload()
                 mixer.music.load("/home/pi/Documents/help.mp3")
                 mixer.music.play()
                 acc_y = read_raw_data(ACCEL_YOUT_H)
