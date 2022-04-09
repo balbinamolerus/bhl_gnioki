@@ -113,7 +113,7 @@ while True:
     p = GPIO.input(play)
     gas = GPIO.input(switch)
 
-    print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
+    # print("Ay = %.2f g" % Ay, "\tGas = {}".format(GPIO.input(switch)), "\tMusic:", state)
 
     # Sense CO2 or falling
     if Ay < 0.4 and last_Ay >= 0.4 and counter >= 10:
