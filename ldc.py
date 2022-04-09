@@ -49,7 +49,7 @@ def screen():
     lastTime = time.strftime('%H:%M')
     draw.text((5, 80), lastTime, font=font24, fill=0) #200,80
     epd.display_Partial(epd.getbuffer(Himage))
-    draw.text((150, 50), "Amelia", font=fontAmelia, fill=0)
+    draw.text((140, 50), "Amelia", font=fontAmelia, fill=0)
     while True:
         try:
             current_time = time.strftime('%H:%M')
