@@ -40,7 +40,8 @@ def screen():
     epd.init()
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    # font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font24 = ImageFont.truetype('flowers.ttf', 24)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
@@ -79,7 +80,6 @@ def screen():
             time.sleep(2)
             epd2in9_V2.epdconfig.module_exit()
             exit()
-
 
 client.loop_start()
 client.subscribe([("alarm", 1)])
