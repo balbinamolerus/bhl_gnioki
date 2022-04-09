@@ -34,14 +34,14 @@ libdir = '/home/pi/bhl/bhl_gnioki/lib'
 def screen():
     global alarm
     global alarmType
-    con = sqlite3.connect('interface/interface/db.sqlite3')
+    con = sqlite3.connect('/home/pi/bhl/bhl_gnioki/interface/interface/db.sqlite3')
     cur = con.cursor()
     epd = epd2in9_V2.EPD()
     epd.init()
     epd.Clear(0xFF)
     font36 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 36)
     # font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    font24 = ImageFont.truetype('flowers.ttf', 24)
+    font24 = ImageFont.truetype('/home/pi/bhl/bhl_gnioki/flowers.ttf', 24)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     sumo = 0
     Himage = Image.new('1', (epd.height, epd.width), 255)
