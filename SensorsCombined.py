@@ -32,9 +32,7 @@ GPIO.setup(play, GPIO.IN)
 
 
 def on_message(client, userdata, message):
-    print("a")
     if message.topic == "alert":
-        print("b")
         mixer.music.load("/home/pi/Documents/alert.mp3")
         mixer.music.play()
         time.sleep(2)
@@ -46,9 +44,7 @@ client = mqtt.Client()
 client.username_pw_set("user1", "user1")
 client.on_message = on_message
 client.connect(broker_address, 1880)
-
-client.subscribe(
-    [("alarm", 1)])
+client.subscribe([("alert", 1)])
 
 client.loop_start()
 
